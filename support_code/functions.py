@@ -8,6 +8,7 @@ from tensorflow.keras.models import load_model
 from scipy.stats import pearsonr
 
 def fetch_data(table, db='ticker_data.db'):
+    """Pull data from .db file according to table name"""
     
     connection = sql.connect(db)
 
@@ -29,6 +30,7 @@ def fetch_data(table, db='ticker_data.db'):
     return df
 
 def pickle_model(mod, path='model_info'):
+    """Pickle the memory/parameters of the DQN and save the tensorflow network"""
     
     memory = mod.memory
     parameters = np.array([
@@ -52,6 +54,7 @@ def pickle_model(mod, path='model_info'):
         mod.model.save(os.path.join(path, 'network.pb'))
         
 def unpickle_model(mod_class, path='model_info'):
+    """Load the pickled memory/parameters of the DQN and unpack the tensorflow network"""
     
     network = load_model(os.path.join(path, 'network.pb'))
     
@@ -70,6 +73,7 @@ def unpickle_model(mod_class, path='model_info'):
     return model
     
 def buy_and_hold(balance_init, back_prices, fee):
+    """Hypothetical buy and hold strategy to be used in plotting"""
 
     balance = balance_init
     net_worth = balance_init
@@ -97,6 +101,8 @@ def buy_and_hold(balance_init, back_prices, fee):
     return net_worth_trace
 
 def corr(x, y):
+    """Absolute value of Pearson correlation coefficient"""
+    
     return np.abs(
         pearsonr(x,y)[0]
         )

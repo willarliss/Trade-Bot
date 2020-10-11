@@ -6,7 +6,7 @@
 
  - `assets`
    - Supporting files and images for presentation purposes
- - `model_info_`*
+ - `models`
    - Saved model parameters and networks specific to certain stock
  - `support_code`
    - `env.py`: The stock trading environment used for backtesting and training
@@ -57,9 +57,13 @@ The `render` method will display the portfolio balance, net worth, shares held, 
 
 Several different agents were tested on different stocks. One agent is a DQN model that uses augmented state information in order to improve performance with "prior knowledge". Another agent is an embedded Double-DQN model that uses two neural networks to predict a continuous action space. Another agent is a basic DQN model. The basic DQN model was tested with two different neural network architectures. One has two hidden layers with 1,528 nodes and 1,032 nodes respectively. The other has three hidden layers with 942 nodes, 360 nodes, and 70 nodes respectively.
 
+![model design](assets/diagram.png)
+
 The best agent was the basic DQN model with a two-layer neural network. This agent was trained with 2,500 episodes of backtesting. Its performance on the **GOOG** test set (the later 20% of the stock history) is displayed below. The top panel of the figure shows the agent's performance in red compared to the performance of the buy and hold strategy in dashed blue. The agent consistently performed just above the buy and hold strategy.
 
 ![agent trained on goog](assets/goog_best.png)
+
+The initial balance of the backtesting portfolio was $1,000,000. The model trained in Google backtesting performed roughly 3% better than the buy and hold strategy over a period of roughly 2.5 years, resulting in $30,733 more in profit. The buy and hold strategy of the Google stock performed 13% worse than a buy and hold strategy on the S&P 500 index. The model trained in Google backtesting performed only 11% worse than a buy and hold strategy on the S&P 500 index. The model's active management of the Google stock alone performed $24,795 closer to the S&P 500 index on average than the passive management of Google stock.
 
 ## Next Steps
 

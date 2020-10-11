@@ -1,1 +1,0 @@
-Two large layers in nn. Early stopping in training
