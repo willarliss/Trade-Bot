@@ -7,7 +7,7 @@ import sqlite3 as sql
 from tensorflow.keras.models import load_model
 from scipy.stats import pearsonr
 
-def fetch_data(table, db='ticker_data.db'):
+def fetch_data(table, db='./data/ticker_data.db'):
     """Pull data from .db file according to table name"""
     
     connection = sql.connect(db)
