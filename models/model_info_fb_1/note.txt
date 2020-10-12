@@ -1,0 +1,1 @@
+Two hidden layer DQN. Early stopping

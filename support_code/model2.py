@@ -64,6 +64,7 @@ def build_model(input_shape, output_len):
     return model      
 
 class DQN:
+    """This class corresponds to testing_DQN-2.ipynb and offers an embedded Double DQN agent"""
     
     def __init__(self, action_space, state_space,
         gamma=0.99, memory_size=100_000, batch_size=100, alpha=1.0, alpha_min=0.01, alpha_decay=0.9,

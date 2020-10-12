@@ -25,13 +25,13 @@
  - `testing_DQN.ipynb`
    - The notebook for training and testing a DQN model with a shallower but larger neural network. This is the base model
  - `ticker_data.db`
-   - The database file containing tables for each **FANG** stock history
+   - The database file containing tables for each *FANG* stock history
    
 ---
 
 ## Problem
 
-Can an intelligent stock trading agent be trained in a backtesting simulation environment to learn how to profitably trade stocks and automate the process of portfolio management? Reinforcement Learning AI techniques will be employed to train a Deep Q-Network on the historical prices of the **FANG** technology leaders. The goal of the model is not to predict prices, but rather to predict quantities of shares to trade such that a long term profit will be achieved.
+Can an intelligent stock trading agent be trained in a backtesting simulation environment to learn how to profitably trade stocks and automate the process of portfolio management? Reinforcement Learning AI techniques will be employed to train a Deep Q-Network on the historical prices of the *FANG* technology leaders. The goal of the model is not to predict prices, but rather to predict quantities of shares to trade such that a long term profit will be achieved.
 
 ## Data
 
@@ -41,7 +41,7 @@ Data used to populate the backtesting environment come from Yahoo Finance:
  - Netflix: [NFLX](https://finance.yahoo.com/quote/NFLX/history?period1=1022112000&period2=1601424000&interval=1d&filter=history&frequency=1d)
  - Google: [GOOG](https://finance.yahoo.com/quote/GOOG/history?period1=1092873600&period2=1601424000&interval=1d&filter=history&frequency=1d)
  
-For simplicity, the environment will only observe prices starting in 2009. This will ensure that data series are of the same length (except for **FB**, which IPOd in 2012). It will also avoid the market shock of the 2008 Financial Crisis, a feature which could cause difficulty for training the model. Prices and volume will be fed to the agent normalized between 0 and 1 (as determined by the highest price/volume yet seen in backtesting).
+For simplicity, the environment will only observe prices starting in 2009. This will ensure that data series are of the same length (except for **FB**, which had its IPO in 2012). It will also avoid the market shock of the 2008 Financial Crisis, a feature which could cause difficulty for training the model. Prices and volume will be fed to the agent normalized between 0 and 1 (as determined by the highest price/volume yet seen in backtesting).
 
 ## Backtesting Environment
 
