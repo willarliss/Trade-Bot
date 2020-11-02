@@ -33,35 +33,36 @@ class Portfolio:
         
     def make_trade(self, actions, prices):
         
-        step = 1e-5
         assert type(actions) == dict
         assert type(prices) == dict
         
         net_worth_prev = self.net_worth
-        sales = {stock:action for stock, action in actions.items() if action < 0}
-        purchases = {stock:action for stock, action in actions.items() if action > 0}
+        purchases = {}
         
         # Execute sales first
-        for stock, action in sales.items():
-
-            # How many shares are held
-            total_possible = self.positions_full[stock]
-            # Sell the specified portion of available held
-            shares_sold = total_possible * -action
-            # Profit is the price times quantity minus fee
-            profit = shares_sold * prices[stock] * (1 - self.fee)
-
-            self.positions_full[stock] -= shares_sold
-            self.balance += profit
-
-        # Adjust purchase allocations        
-        while sum(purchases.values()) > 1:
-            indexes = [i for i,j in purchases.items() if j == max(purchases.values())]
-            for idx in indexes:
-                purchases[idx] -= step
-  
-        # Execute purchases
+        for stock, action in actions.items():
+            if action < 0:
+                                
+                # How many shares are held
+                total_possible = self.positions_full[stock]
+                # Sell the specified portion of available held
+                shares_sold = total_possible * -action
+                # Profit is the price times quantity minus fee
+                profit = shares_sold * prices[stock] * (1 - self.fee)
+                
+                self.positions_full[stock] -= shares_sold
+                self.balance += profit
+                
+            elif action > 0:
+                purchases[stock] = action
+                
+        # Adjust purchase allocations
         balance = self.balance
+        tot = sum(purchases.values())
+        if tot > 1:
+            purchases = {stock: quant/tot for stock, quant in purchases.items()}
+                
+        # Execute purchases
         for stock, action in purchases.items():    
             
             # How many shares can be afforded
@@ -88,7 +89,7 @@ class Portfolio:
         self.days_passed += 1
         self.profits.append(self.net_worth-net_worth_prev)
         
-    def report(self):   
+    def report(self):
         
         print('Balance:', round(self.balance, 5))
         print('Net worth:', self.net_worth)
