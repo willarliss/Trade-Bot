@@ -33,7 +33,6 @@ class Portfolio:
         
     def make_trade(self, actions, prices):
         
-        step = 1e-5
         assert type(actions) == dict
         assert type(prices) == dict
         
@@ -56,9 +55,11 @@ class Portfolio:
 
         # Adjust purchase allocations        
         while sum(purchases.values()) > 1:
-            indexes = [i for i,j in purchases.items() if j == max(purchases.values())]
-            for idx in indexes:
-                purchases[idx] -= step
+            # Change 1e-4 to 1e-3 to make it faster (but less accurate)
+            purchases = {k: 
+                v - 1e-4 if round(v, 9) == round(max(purchases.values()), 9) else v 
+                for k, v in purchases.items()
+                }
   
         # Execute purchases
         balance = self.balance
