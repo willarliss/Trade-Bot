@@ -120,6 +120,8 @@ class TradingEnvironment(gym.Env):
 
     def __init__(self, stocks, balance_init=1_000_000, training=True, train_size=0.8, fee=0.001):
         
+        super(TradingEnvironment, self).__init__()
+        
         self.fee = fee
         self.balance_init = balance_init
         self.agent_portfolio = Portfolio(list(stocks.keys()), self.balance_init, self.fee)
