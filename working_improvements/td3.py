@@ -126,8 +126,6 @@ class TD3:
 
     def __init__(self, state_dim, action_dim, max_action, mem_size=1e6, eta=1e-3):
         
-        super(TD3, self).__init__()
-
         self.actor = Actor(state_dim, action_dim).to(DEVICE)
         self.actor_target = Actor(state_dim, action_dim).to(DEVICE)
         self.actor_target.load_state_dict(self.actor.state_dict())
@@ -159,7 +157,7 @@ class TD3:
             .flatten()
         )
     
-    def train(self, iterations, batch_size=100, gamma=0.99, tau=0.001, policy_noise=0.2, noise_clip=0.5, policy_freq=2):
+    def train(self, iterations=100, batch_size=100, gamma=0.99, tau=0.001, policy_noise=0.2, noise_clip=0.5, policy_freq=2):
 
         for i in np.arange(iterations):
 
