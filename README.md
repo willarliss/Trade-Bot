@@ -68,8 +68,8 @@ The initial balance of the backtesting portfolio was $1,000,000. The model train
 ## Next Steps
 
  - The environment can be modified and improved to support the trade of multiple stocks at once, instead of just one.
- - The environment can be modified to allow a continuous action space. This will allow for testing of Deep Deterministic Policy Gradients or embedded Double DQNs.
- - A separate forecasting model can be built separate from the agent. This will allow price predictions to be fed to the agent alongside environment state observations. 
+ - The environment will be modified to allow a continuous action space. This will allow for testing of Deep Deterministic Policy Gradients or embedded Double DQNs.
+ - A separate forecasting model can be built separate from the agent. This would allow price predictions to be fed to the agent alongside environment state observations. 
 
 ---
 
