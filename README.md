@@ -26,7 +26,7 @@
    - The notebook for training and testing a DQN model with a shallower but larger neural network. This is the base model
  - `ticker_data.db`
    - The database file containing tables for each *FANG* stock history
-   
+
 ---
 
 ## Problem
@@ -40,14 +40,14 @@ Data used to populate the backtesting environment come from Yahoo Finance:
  - Apple: [AAPL](https://finance.yahoo.com/quote/AAPL/history?period1=345427200&period2=1601424000&interval=1d&filter=history&frequency=1d)
  - Netflix: [NFLX](https://finance.yahoo.com/quote/NFLX/history?period1=1022112000&period2=1601424000&interval=1d&filter=history&frequency=1d)
  - Google: [GOOG](https://finance.yahoo.com/quote/GOOG/history?period1=1092873600&period2=1601424000&interval=1d&filter=history&frequency=1d)
- 
+
 For simplicity, the environment will only observe prices starting in 2009. This will ensure that data series are of the same length (except for **FB**, which had its IPO in 2012). It will also avoid the market shock of the 2008 Financial Crisis, a feature which could cause difficulty for training the model. Prices and volume will be fed to the agent normalized between 0 and 1 (as determined by the highest price/volume yet seen in backtesting).
 
 ## Backtesting Environment
 
 The backtesting/simulation environment used in training the agent to trade stocks is roughly based on a trading environment built by [Adam King](https://github.com/notadamking/Stock-Trading-Environment). The environment is built to model OpenAI's framework for reinforcement learning. It inherits OpenAI's `Gym` class and offers the user-facing methods `reset`, `step`, and `render`. Currently it only supports one stock at a time, but the the environment will continue to be developed to support a portfolio of multiple stocks. The environment has a continuous observation space and a discrete action space.
 
-The `reset` method initializes a new episode of trading. If the environment's `training` parameter is turned on, the current step is set to a random point in the given stock's history (before the specified train-test split point). If the parameter is turned off, the current step is set to the specified train-test split point in the given stock's history. 
+The `reset` method initializes a new episode of trading. If the environment's `training` parameter is turned on, the current step is set to a random point in the given stock's history (before the specified train-test split point). If the parameter is turned off, the current step is set to the specified train-test split point in the given stock's history.
 
 The `step` method accepts an `action` argument from the agent and returns the next state, the reward from the action, the terminal status of the episode, and an empty dictionary (OpenAI's environments typically return a dictionary of meta-info instead of an empty one). The `action` argument is an index value of the environment's action space. Possible actions include buying, holding, and selling different portions of the portfolio. Trades are executed at the current step's closing price. States are returned as a *6x5* matrix containing the Open, High, Low, Close, and Volume markers for the most recent five days. The *OHLC* prices are scaled by dividing each by the highest price yet seen in the episode. The volume indicator is divided by the highest volume yet seen. The last row of the state matrix is information about the portfolio's current status, including: net worth divided by initial net worth, balance divided by initial balance, the number of shares held, the number of steps so far taken in the episode, and the number of shares held divided by the current price. The reward is equal to the hypothetical profit of a "buy and hold" strategy minus the agent's actual profit all divided by the initial balance.
 
@@ -69,7 +69,7 @@ The initial balance of the backtesting portfolio was $1,000,000. The model train
 
  - The environment can be modified and improved to support the trade of multiple stocks at once, instead of just one.
  - The environment will be modified to allow a continuous action space. This will allow for testing of Deep Deterministic Policy Gradients or embedded Double DQNs.
- - A separate forecasting model can be built separate from the agent. This would allow price predictions to be fed to the agent alongside environment state observations. 
+ - A separate forecasting model can be built separate from the agent. This would allow price predictions to be fed to the agent alongside environment state observations.
 
 ---
 
@@ -78,4 +78,7 @@ The initial balance of the backtesting portfolio was $1,000,000. The model train
  - https://towardsdatascience.com/creating-a-custom-openai-gym-environment-for-stock-trading-be532be3910e
  - https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3690996
  - https://arxiv.org/ftp/arxiv/papers/1803/1803.03916.pdf
- 
+
+---
+
+*This project is continued in [Trade-Bot-2](https://github.com/willarliss/Trade-Bot-2) with a continuous-action environment*
